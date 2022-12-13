@@ -18,6 +18,7 @@ package com.example.android.dessertclicker
 
 import android.content.ActivityNotFoundException
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -25,9 +26,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ShareCompat
 import androidx.databinding.DataBindingUtil
 import com.example.android.dessertclicker.databinding.ActivityMainBinding
+import kotlin.math.log
 
 class MainActivity : AppCompatActivity() {
-
+     val TAG = "MainActivity"
     private var revenue = 0
     private var dessertsSold = 0
 
@@ -68,6 +70,12 @@ class MainActivity : AppCompatActivity() {
 
         binding.dessertButton.setOnClickListener {
             onDessertClicked()
+        }
+
+        //-----------------------------------------------------------------------
+        if (savedInstanceState != null) {
+            revenue = savedInstanceState.getInt("revenue", 0)
+            dessertsSold = savedInstanceState.getInt("dessertsSold", 0)
         }
 
         // Set the TextViews to the right values
@@ -143,5 +151,37 @@ class MainActivity : AppCompatActivity() {
             R.id.shareMenuButton -> onShare()
         }
         return super.onOptionsItemSelected(item)
+    }
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume Called")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause Called")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d(TAG, "onStop Called")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "onDestroy Called")
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.d(TAG, "onRestart Called")
+    }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putInt("revenue",revenue)
+        outState.putInt("dessertsSold",dessertsSold)
+        Log.d(TAG, "onSaveInstanceState Called")
     }
 }
